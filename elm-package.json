@@ -7,7 +7,14 @@
         "src"
     ],
     "exposed-modules": [
-        "SemanticUI"
+
+        "SemanticUI",
+
+        "SemanticUI.Icon",
+        "SemanticUI.Label",
+        "SemanticUI.Button",
+        "SemanticUI.Container"
+
     ],
     "dependencies": {
         "elm-lang/core": "5.1.1 <= v < 6.0.0",
