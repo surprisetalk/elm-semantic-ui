@@ -1,15 +1,18 @@
 
 module SemanticUI.Button exposing ( Button
                                   , Animation(..)
-                                  , Outlook(..)
-                                  , SocialSite(..)
                                   , button
                                   , iconButton
                                   , iconLabelButton
                                   , labelButton
                                   , animatedButton
                                   , toHtml
+                                  , setHtmlAttributes
+                                  , addHtmlAttributes
                                   , Traits
+                                  , State(..)
+                                  , Outlook(..)
+                                  , SocialSite(..)
                                   , defaultTraits
                                   , configure
                                   )
@@ -18,6 +21,19 @@ module SemanticUI.Button exposing ( Button
 -- TODO:   conditionalGroup
 
 -- TODO: which traits are mutually exclusive?
+
+{-| TODO
+
+# Buttons
+@docs Button, button, iconButton, iconLabelButton, labelButton, animatedButton, Animation
+
+## Traits
+@docs Traits, State, Outlook, SocialSite, defaultTraits, configure
+
+## HTML
+@docs toHtml, setHtmlAttributes, addHtmlAttributes
+
+-}
 
 -- IMPORTS ---------------------------------------------------------------------
 
@@ -39,44 +55,43 @@ import Html.Attributes as Attr exposing ( class, classList )
 
 -- BUTTON ----------------------------------------------------------------------
 
-type Outlook = Positive
-             | Negative
-
-type SocialSite = Facebook
-                | Twitter
-                | Google
-                | VK
-                | LinkedIn
-                | Instagram
-                | YouTube
-
+{-| TODO
+-}
 type Animation = Horizontal
                | Vertical
                | Fade
 
 type Content msg = Anim (Html msg) (Html msg) Animation
                  | Body (Html msg)
-                 | Ican      Icon  (Maybe (Html msg))
-                 | IcanLabal Icon  (Button msg) HorizontalAlignment
-                 |     Labal Label (Button msg) HorizontalAlignment
+                 | Ican       Icon       (Maybe (Html msg))
+                 | IcanLabal  Icon       (Button msg) HorizontalAlignment
+                 |     Labal (Label msg) (Button msg) HorizontalAlignment
 
+{-| TODO
+-}
 type Button msg = Button { attr    : (List (Attribute msg))
                          , traits  : Traits
                          , content : Content msg
                          }
 
+{-| TODO
+-}
 button : Html msg -> Button msg
 button html = Button { attr    = []
                      , traits  = defaultTraits
                      , content = Body html
                      }
 
+{-| TODO
+-}
 iconButton : Icon -> Maybe (Html msg) -> Button msg
 iconButton icon html = Button { attr    = []
                               , traits  = defaultTraits
                               , content = Ican icon html
                               }
 
+{-| TODO
+-}
 animatedButton : Animation -> Html msg -> Html msg -> Button msg
 animatedButton anim hidden visible = Button { attr    = []
                                             , traits  = defaultTraits
@@ -84,13 +99,17 @@ animatedButton anim hidden visible = Button { attr    = []
                                             }
 
 
-labelButton : HorizontalAlignment -> Label -> Button msg -> Button msg
+{-| TODO
+-}
+labelButton : HorizontalAlignment -> Label msg -> Button msg -> Button msg
 labelButton align label button = Button { attr    = []
                                         , traits  = defaultTraits
                                         , content = Labal label button align
                                         }
               
 
+{-| TODO
+-}
 iconLabelButton : HorizontalAlignment -> Icon -> Button msg -> Button msg
 iconLabelButton align icon button = Button { attr    = []
                                            , traits  = defaultTraits
@@ -103,6 +122,8 @@ iconLabelButton align icon button = Button { attr    = []
 (=>) : a -> b -> ( a, b )
 (=>) = (,)
 
+{-| TODO
+-}
 toHtml : Button msg -> Html msg
 toHtml (Button {attr,traits,content})
   = let attr_ : String -> List (Attribute msg)
@@ -171,10 +192,10 @@ toHtml (Button {attr,traits,content})
                       Just Massive         -> "massive"         => True
                   , case traits.attach of
                       Nothing              ->    ""             => False
-                      Just Top             ->    "top attached" => True
+                      Just Up              ->    "top attached" => True
                       Just Left            ->   "left attached" => True
                       Just Right           ->  "right attached" => True
-                      Just Bottom          -> "bottom attached" => True
+                      Just Down            -> "bottom attached" => True
 
                   , "button" => True
                   ]
@@ -235,10 +256,14 @@ toHtml (Button {attr,traits,content})
 
 -- HTML ATTRIBUTES -------------------------------------------------------------
 
+{-| TODO
+-}
 setHtmlAttributes : List (Attribute msg) -> Button msg -> Button msg
 setHtmlAttributes attr_ (Button button)
   = Button { button | attr = attr_ }
 
+{-| TODO
+-}
 addHtmlAttributes : List (Attribute msg) -> Button msg -> Button msg
 addHtmlAttributes attr_ (Button ({attr} as button))
   = Button { button | attr = attr_ ++ attr }
@@ -246,10 +271,30 @@ addHtmlAttributes attr_ (Button ({attr} as button))
 
 -- TRAITS ----------------------------------------------------------------------
 
+{-| TODO
+-}
 type State = Active
            | Loading
            | Disabled
 
+{-| TODO
+-}
+type Outlook = Positive
+             | Negative
+
+{-| TODO
+-}
+type SocialSite = Facebook
+                | Twitter
+                | Google
+                | VK
+                | LinkedIn
+                | Instagram
+                | YouTube
+
+
+{-| TODO
+-}
 type alias Traits = { outlook   : Maybe Outlook
                     , social    : Maybe SocialSite
                     , state     : Maybe State
@@ -266,6 +311,8 @@ type alias Traits = { outlook   : Maybe Outlook
                     , circular  : Maybe Bool
                     }
   
+{-| TODO
+-}
 defaultTraits : Traits
 defaultTraits = { outlook   = Nothing
                 , social    = Nothing
@@ -283,6 +330,8 @@ defaultTraits = { outlook   = Nothing
                 , circular  = Nothing
                 }
     
+{-| TODO
+-}
 configure : Traits -> Button msg -> Button msg
 configure traits_ (Button button)
   = Button { button | traits = traits_ }

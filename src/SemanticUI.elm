@@ -4,6 +4,7 @@ module SemanticUI exposing ( Size(..)
                            , Emphasis(..)
                            , Alignment(..)
                            , TextAlignment(..)
+                           , VerticalAlignment(..)
                            , HorizontalAlignment(..)
                            )
 
@@ -18,7 +19,7 @@ Please avoid adding your own classes to the components for now.
 @docs Size, Emphasis, Color
 
 ## Alignment
-@docs Alignment, TextAlignment, HorizontalAlignment
+@docs Alignment, TextAlignment, VerticalAlignment, HorizontalAlignment
 
 # Shout-Outs
 * [elm-bootstrap]()
@@ -75,10 +76,16 @@ type TextAlignment = TextLeft
 
 {-| Align things in the cardinal directions. More useful than you'd suspect.
 -}
-type Alignment = Top
+type Alignment = Up
+               | Down
                | Left
                | Right
-               | Bottom
+
+{-| Align things vertically! The bane of front-end developers' existence...
+-}
+type VerticalAlignment = VerticalTop
+                       | VerticalMiddle
+                       | VerticalBottom
 
 {-| Align things left or right. Useful for indicating general x-axis direction.
 -}
